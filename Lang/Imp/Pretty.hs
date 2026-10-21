@@ -3,7 +3,12 @@
 -------------------------------------------------------------------------------
 
 {-# LANGUAGE GADTs #-}
-module Lang.Imp.Pretty where
+module Lang.Imp.Pretty
+  ( ppExpr,
+    ppCmd,
+  )
+where
+
 import Lang.Imp.Ast
 
 todo :: a

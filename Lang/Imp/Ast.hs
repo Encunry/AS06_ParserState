@@ -5,32 +5,37 @@
 {-# LANGUAGE StandaloneDeriving #-}
 {-# OPTIONS_GHC -Wall #-}
 
-module Lang.Imp.Ast where
+module Lang.Imp.Ast
+    ( Name,
+      Expr (..),
+      Cmd (..),
+    )
+where
 
 type Name = String
 
 data Expr a where
-  BNot :: Expr Bool -> Expr Bool
-  BAnd :: Expr Bool -> Expr Bool -> Expr Bool
-  BOr :: Expr Bool -> Expr Bool -> Expr Bool
-  REq :: Expr Integer -> Expr Integer -> Expr Bool
-  RLt :: Expr Integer -> Expr Integer -> Expr Bool
-  AConst :: Integer -> Expr Integer
-  APlus :: Expr Integer -> Expr Integer -> Expr Integer
-  AMinus :: Expr Integer -> Expr Integer -> Expr Integer
-  AMul :: Expr Integer -> Expr Integer -> Expr Integer
-  ADiv :: Expr Integer -> Expr Integer -> Expr Integer
-  AMod :: Expr Integer -> Expr Integer -> Expr Integer
-  AVar :: Name -> Expr Integer
+    Bool_Not :: Expr Bool -> Expr Bool
+    Bool_And :: Expr Bool -> Expr Bool -> Expr Bool
+    Bool_Or :: Expr Bool -> Expr Bool -> Expr Bool
+    Rel_Equal :: Expr Integer -> Expr Integer -> Expr Bool
+    Rel_LessThan :: Expr Integer -> Expr Integer -> Expr Bool
+    Arith_Constant :: Integer -> Expr Integer
+    Arith_Add :: Expr Integer -> Expr Integer -> Expr Integer
+    Arith_Sub :: Expr Integer -> Expr Integer -> Expr Integer
+    Arith_Mul :: Expr Integer -> Expr Integer -> Expr Integer
+    Arith_Div :: Expr Integer -> Expr Integer -> Expr Integer
+    Arith_Mod :: Expr Integer -> Expr Integer -> Expr Integer
+    Arith_Variable :: Name -> Expr Integer
 
 deriving instance Eq (Expr a)
 
 deriving instance Show (Expr a)
 
 data Cmd
-  = CSkip
-  | CAssign Name (Expr Integer)
-  | CIfThEl (Expr Bool) Cmd Cmd
-  | CWhile (Expr Bool) Cmd
-  | CSeq [Cmd]
-  deriving (Eq, Show)
+    = Cmd_Skip
+    | Cmd_Assign Name (Expr Integer)
+    | Cmd_IfThenElse (Expr Bool) Cmd Cmd
+    | Cmd_While (Expr Bool) Cmd
+    | Cmd_Sequence [Cmd]
+    deriving (Eq, Show)

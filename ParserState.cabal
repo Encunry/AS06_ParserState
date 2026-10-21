@@ -1,33 +1,46 @@
 cabal-version:      3.0
 name:               ParserState
 version:            0.1.0.0
-author:             Daniel Kröni
+author:             Daniel Kröni
 maintainer:         daniel.kroeni@fhnw.ch
 build-type:         Simple
 
 common warning
     ghc-options: -Wall
 
-executable imp
+library
   import:           warning
-  main-is:          Lang/Imp/Main.hs
-  other-modules:    Lang.Parser.Combinators, Lang.Imp.Parser, Lang.Imp.Interpreter, Lang.Imp.Ast, Lang.Imp.Pretty
-  -- other-extensions:
-  build-depends:       
+  hs-source-dirs:   .
+  exposed-modules:  Lang.Parser.Combinators
+                    Lang.Imp.Parser
+                    Lang.Imp.Interpreter
+                    Lang.Imp.Ast
+                    Lang.Imp.Pretty
+  build-depends:
     base >=4.17 && <5,
     containers
-  -- hs-source-dirs:
+  default-language: Haskell2010
+
+executable imp
+  import:           warning
+  hs-source-dirs:   Lang/Imp
+  main-is:          Main.hs
+  build-depends:
+    base >=4.17 && <5,
+    containers,
+    ParserState
   default-language: Haskell2010
 
 test-suite imp-test
   import:           warning
-  default-language: Haskell2010 
+  hs-source-dirs:   Lang/Test
+  default-language: Haskell2010
   type:             exitcode-stdio-1.0
-  main-is:          Lang/Test/Tests.hs
-  other-modules:    Lang.Parser.Combinators, Lang.Imp.Parser, Lang.Imp.Interpreter, Lang.Imp.Ast,  Lang.Imp.Pretty
+  main-is:          Tests.hs
   build-depends:
     base >=4.17 && <5,
     containers,
+    ParserState,
     hspec ==2.11.17,
     hspec-contrib,
     QuickCheck,

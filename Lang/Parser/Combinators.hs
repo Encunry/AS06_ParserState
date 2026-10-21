@@ -1,5 +1,18 @@
 {-# LANGUAGE InstanceSigs #-}
-module Lang.Parser.Combinators where
+module Lang.Parser.Combinators
+  ( Parser (..),
+    item,
+    sat,
+    digit,
+    alphaNum,
+    char,
+    string,
+    lower,
+    space,
+    token,
+    symbol,
+  )
+where
 
 import Control.Applicative
 import Data.Char
